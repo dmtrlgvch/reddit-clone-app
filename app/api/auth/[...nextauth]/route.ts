@@ -1,5 +1,70 @@
 import NextAuth from "next-auth/next";
-import {authOptions} from "@/lib/authOptions";
+import {NextAuthOptions} from "next-auth";
+import {db} from "@/lib/db";
+import {PrismaAdapter} from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import {nanoid} from "nanoid";
+
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(db),
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/sign-in",
+  },
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+  callbacks: {
+    async session({token, session}) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.username = token.username;
+        session.user.image = token.picture;
+      }
+      return session;
+    },
+    async jwt({token, user}) {
+      const existingUser = await db.user.findFirst({
+        where: {
+          id: token.id,
+        },
+      });
+
+      if (!existingUser) {
+        token.id = user.id;
+        return token;
+      }
+
+      if (!existingUser.username) {
+        await db.user.update({
+          where: {
+            id: existingUser.id,
+          },
+          data: {
+            username: nanoid(10),
+          },
+        });
+      }
+
+      return {
+        id: existingUser.id,
+        name: existingUser.name,
+        username: existingUser.username,
+        email: existingUser.email,
+        picture: existingUser.image,
+      };
+    },
+    redirect() {
+      return "/";
+    },
+  },
+};
 
 const handler = NextAuth(authOptions);
 

@@ -1,11 +1,13 @@
-import {SignInForm} from "@/components/sign-in-form";
+import {SignUpForm} from "@/components/sign-up-form";
 import {buttonVariants} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
 import {ChevronLeft} from "lucide-react";
 import Link from "next/link";
 import {FC} from "react";
 
-const SignInPage: FC = () => {
+interface pageProps {}
+
+const SignUpPage: FC<pageProps> = ({}) => {
   return (
     <div className="absolute inset-0">
       <div className="h-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-20">
@@ -20,10 +22,10 @@ const SignInPage: FC = () => {
           Home
         </Link>
 
-        <SignInForm />
+        <SignUpForm />
       </div>
     </div>
   );
 };
 
-export default SignInPage;
+export default SignUpPage;

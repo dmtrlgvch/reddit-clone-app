@@ -2,12 +2,13 @@ import Link from "next/link";
 import {Icons} from "./icons";
 import {buttonVariants} from "@/components/ui/button";
 import {getAuthSession} from "@/lib/auth";
+import {UserMenu} from "./user-menu";
 
-export const Navbar = async () => {
+export const Header = async () => {
   const session = await getAuthSession();
-  console.log("🚀 ~ Navbar ~ session >>>>", session);
+
   return (
-    <div className="fixed top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-[10] py-2">
+    <header className="sticky top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-[10] py-3">
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
         <Link href="/" className="flex gap-2 items-center">
           <Icons.logo className="h-10 w-10 sm:h-8 sm:w-8" />
@@ -16,10 +17,14 @@ export const Navbar = async () => {
           </p>
         </Link>
 
-        <Link href="/sign-in" className={buttonVariants()}>
-          Sign In
-        </Link>
+        {session?.user ? (
+          <UserMenu user={session.user} />
+        ) : (
+          <Link href="/sign-in" className={buttonVariants()}>
+            Sign In
+          </Link>
+        )}
       </div>
-    </div>
+    </header>
   );
 };
