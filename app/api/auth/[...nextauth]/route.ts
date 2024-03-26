@@ -27,12 +27,16 @@ export const authOptions: NextAuthOptions = {
         session.user.username = token.username;
         session.user.image = token.picture;
       }
+
+      console.log("🚀 ~ session ~ session:", session);
       return session;
     },
     async jwt({token, user}) {
+      if (!token.sub) return token;
+
       const existingUser = await db.user.findFirst({
         where: {
-          id: token.id,
+          id: token.sub,
         },
       });
 
@@ -60,8 +64,11 @@ export const authOptions: NextAuthOptions = {
         picture: existingUser.image,
       };
     },
-    redirect() {
-      return "/";
+    redirect({url, baseUrl}) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+
+      return baseUrl;
     },
   },
 };

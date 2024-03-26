@@ -4,12 +4,13 @@ import {AvatarProps} from "@radix-ui/react-avatar";
 import {Icons} from "@/components/icons";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import Image from "next/image";
+import {FC} from "react";
 
 interface UserAvatarProps extends AvatarProps {
   user: Pick<User, "image" | "name">;
 }
 
-export const UserAvatar = ({user, ...props}: UserAvatarProps) => {
+export const UserAvatar: FC<UserAvatarProps> = ({user, ...props}) => {
   return (
     <Avatar {...props}>
       {user.image ? (

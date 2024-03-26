@@ -1,5 +1,6 @@
 "use client";
 
+import {FC} from "react";
 import Link from "next/link";
 import {User} from "next-auth";
 import {signOut} from "next-auth/react";
@@ -17,7 +18,7 @@ interface UserMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">;
 }
 
-export const UserMenu = ({user}: UserMenuProps) => {
+export const UserMenu: FC<UserMenuProps> = ({user}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -55,7 +56,7 @@ export const UserMenu = ({user}: UserMenuProps) => {
           onSelect={(event) => {
             event.preventDefault();
             signOut({
-              callbackUrl: `${window.location.origin}/sign-in`,
+              callbackUrl: `/sign-in`,
             });
           }}
         >

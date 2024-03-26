@@ -15,7 +15,9 @@ export const SignInForm: FC = () => {
     setIsLoading(true);
 
     try {
-      await signIn("google");
+      await signIn("google", {
+        callbackUrl: "/",
+      });
     } catch (error) {
       toast({
         title: "Error",

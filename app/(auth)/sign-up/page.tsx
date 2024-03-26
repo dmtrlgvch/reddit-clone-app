@@ -5,9 +5,7 @@ import {ChevronLeft} from "lucide-react";
 import Link from "next/link";
 import {FC} from "react";
 
-interface pageProps {}
-
-const SignUpPage: FC<pageProps> = ({}) => {
+const SignUpPage: FC = ({}) => {
   return (
     <div className="absolute inset-0">
       <div className="h-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-20">
