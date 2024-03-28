@@ -12,7 +12,7 @@ export const Header = async () => {
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
         <Link href="/" className="flex gap-2 items-center">
           <Icons.logo className="h-10 w-10 sm:h-8 sm:w-8" />
-          <p className="hidden text-zinc-700 text-sm font-medium md:block">
+          <p className="hidden text-zinc-700 text-md font-medium md:block">
             Kinda Reddit
           </p>
         </Link>

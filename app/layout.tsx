@@ -5,6 +5,7 @@ import {cn} from "@/lib/utils";
 import {Header} from "@/components/header";
 import {Toaster} from "@/components/ui/toaster";
 import "@/styles/globals.css";
+import Providers from "@/components/providers";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -24,14 +25,16 @@ const RootLayout: FC<RootLayoutProps> = ({children, authModal}) => {
       lang="en"
       className={cn("bg-white text-slate-900 antialiased", inter.className)}
     >
-      <body className="min-h-screen bg-slate-50 antialiased">
-        <Header />
-        <main className="container max-w-7xl mx-auto h-full pt-12">
-          {children}
-        </main>
-        {authModal}
-        <Toaster />
-      </body>
+      <Providers>
+        <body className="min-h-screen bg-slate-50 antialiased">
+          <Header />
+          <main className="container max-w-7xl mx-auto h-full pt-12">
+            {children}
+          </main>
+          {authModal}
+          <Toaster />
+        </body>
+      </Providers>
     </html>
   );
 };
