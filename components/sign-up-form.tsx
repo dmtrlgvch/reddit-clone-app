@@ -1,13 +1,13 @@
 "use client";
 
-import {useState, FC} from "react";
+import {useState} from "react";
 import {signIn} from "next-auth/react";
 import {Button} from "@/components/ui/button";
 import {useToast} from "@/hooks/use-toast";
 import {Icons} from "@/components/icons";
 import Link from "next/link";
 
-export const SignUpForm: FC = () => {
+export const SignUpForm = () => {
   const {toast} = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

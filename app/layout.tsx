@@ -1,4 +1,3 @@
-import {FC} from "react";
 import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import {cn} from "@/lib/utils";
@@ -14,12 +13,12 @@ export const metadata: Metadata = {
   description: "A Reddit clone built with Next.js",
 };
 
-interface RootLayoutProps {
+interface Props {
   children: React.ReactNode;
   authModal: React.ReactNode;
 }
 
-const RootLayout: FC<RootLayoutProps> = ({children, authModal}) => {
+const RootLayout = ({children, authModal}: Props) => {
   return (
     <html
       lang="en"

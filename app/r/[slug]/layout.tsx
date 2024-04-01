@@ -13,13 +13,12 @@ export const metadata: Metadata = {
   title: "Breadit",
 };
 
-const Layout = async ({
-  children,
-  params: {slug},
-}: {
+interface Props {
   children: ReactNode;
   params: {slug: string};
-}) => {
+}
+
+const Layout = async ({children, params: {slug}}: Props) => {
   const session = await getAuthSession();
 
   const subreddit = await db.subreddit.findFirst({

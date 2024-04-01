@@ -1,10 +1,8 @@
 "use client";
 
-import {FC} from "react";
 import Link from "next/link";
 import {User} from "next-auth";
 import {signOut} from "next-auth/react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,11 +12,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {UserAvatar} from "@/components/user-avatar";
 
-interface UserMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">;
 }
 
-export const UserMenu: FC<UserMenuProps> = ({user}) => {
+export const UserMenu = ({user}: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

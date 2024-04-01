@@ -1,6 +1,6 @@
 "use client";
 
-import {FC, startTransition} from "react";
+import {startTransition} from "react";
 import {useRouter} from "next/navigation";
 import {useMutation} from "@tanstack/react-query";
 import axios, {AxiosError} from "axios";
@@ -9,17 +9,17 @@ import {Button} from "@/components/ui/button";
 import {useToast} from "../hooks/use-toast";
 import {useCustomToasts} from "@/hooks/use-custom-toasts";
 
-interface SubscribeLeaveToggleProps {
+interface Props {
   isSubscribed: boolean;
   subredditId: string;
   subredditName: string;
 }
 
-export const SubscribeLeaveToggle: FC<SubscribeLeaveToggleProps> = ({
+export const SubscribeLeaveToggle = ({
   isSubscribed,
   subredditId,
   subredditName,
-}) => {
+}: Props) => {
   const {toast} = useToast();
   const {loginToast} = useCustomToasts();
   const router = useRouter();

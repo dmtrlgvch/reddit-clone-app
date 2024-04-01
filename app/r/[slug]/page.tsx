@@ -1,17 +1,16 @@
-import {FC} from "react";
 import {getAuthSession} from "@/lib/auth";
 import {db} from "@/lib/db";
 import {notFound} from "next/navigation";
 import {INFINITE_SCROLL_PAGINATION_RESULTS} from "@/constants";
 import {MiniCreatePost} from "@/components/mini-create-post";
 
-interface SubredditPageProps {
+interface Props {
   params: {
     slug: string;
   };
 }
 
-const SubredditPage: FC<SubredditPageProps> = async ({params}) => {
+const SubredditPage = async ({params}: Props) => {
   const {slug} = params;
   const session = await getAuthSession();
 

@@ -3,16 +3,15 @@
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Image as ImageIcon, Link2} from "lucide-react";
-import {FC} from "react";
 import {UserAvatar} from "@/components/user-avatar";
 import type {Session} from "next-auth";
 import {usePathname, useRouter} from "next/navigation";
 
-interface MiniCreatePostProps {
+interface Props {
   session: Session | null;
 }
 
-export const MiniCreatePost: FC<MiniCreatePostProps> = ({session}) => {
+export const MiniCreatePost = ({session}: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
