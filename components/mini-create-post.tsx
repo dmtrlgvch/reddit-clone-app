@@ -4,14 +4,11 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Image as ImageIcon, Link2} from "lucide-react";
 import {UserAvatar} from "@/components/user-avatar";
-import type {Session} from "next-auth";
 import {usePathname, useRouter} from "next/navigation";
+import {useAuthSession} from "@/hooks/use-auth-session";
 
-interface Props {
-  session: Session | null;
-}
-
-export const MiniCreatePost = ({session}: Props) => {
+export const MiniCreatePost = () => {
+  const session = useAuthSession();
   const router = useRouter();
   const pathname = usePathname();
 

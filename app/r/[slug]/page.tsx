@@ -1,8 +1,8 @@
-import {getAuthSession} from "@/lib/auth";
 import {db} from "@/lib/db";
 import {notFound} from "next/navigation";
-import {INFINITE_SCROLL_PAGINATION_RESULTS} from "@/constants";
 import {MiniCreatePost} from "@/components/mini-create-post";
+import {PostFeed} from "@/components/post-feed";
+import {PAGINATION_LIMIT} from "@/constants";
 
 interface Props {
   params: {
@@ -12,7 +12,6 @@ interface Props {
 
 const SubredditPage = async ({params}: Props) => {
   const {slug} = params;
-  const session = await getAuthSession();
 
   const subreddit = await db.subreddit.findFirst({
     where: {name: slug},
@@ -27,7 +26,7 @@ const SubredditPage = async ({params}: Props) => {
         orderBy: {
           createdAt: "desc",
         },
-        take: INFINITE_SCROLL_PAGINATION_RESULTS,
+        take: PAGINATION_LIMIT,
       },
     },
   });
@@ -39,7 +38,8 @@ const SubredditPage = async ({params}: Props) => {
       <h1 className="font-bold text-3xl md:text-4xl h-14">
         r/{subreddit.name}
       </h1>
-      <MiniCreatePost session={session} />
+      <MiniCreatePost />
+      <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
   );
 };
