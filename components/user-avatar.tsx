@@ -9,11 +9,20 @@ interface Props extends AvatarProps {
 export const UserAvatar = ({user, ...props}: Props) => {
   return (
     <Avatar {...props}>
-      <AvatarImage src={user?.image || ""} />
-      <AvatarFallback>
-        <span className="sr-only">{user?.name}</span>
-        <Icons.user />
-      </AvatarFallback>
+      {user.image ? (
+        <div className="relative aspect-square h-full w-full">
+          <AvatarImage
+            src={user.image}
+            alt="profile picture"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      ) : (
+        <AvatarFallback>
+          <span className="sr-only">{user?.name}</span>
+          <Icons.user className="h-4 w-4" />
+        </AvatarFallback>
+      )}
     </Avatar>
   );
 };

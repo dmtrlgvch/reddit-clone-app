@@ -9,6 +9,7 @@ export const SubredditSubscriptionSchema = z.object({
 });
 
 export type CreateSubredditType = z.infer<typeof SubredditSchema>;
+
 export type SubscribeToSubredditType = z.infer<
   typeof SubredditSubscriptionSchema
 >;
