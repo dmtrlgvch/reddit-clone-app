@@ -1,6 +1,6 @@
-import {getAuthSession} from "@/lib/auth";
-import {db} from "@/lib/db";
-import {z} from "zod";
+import { getAuthSession } from "@/lib/get-auth-session";
+import { db } from "@/lib/db";
+import { z } from "zod";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const {limit, page, subredditName} = z
+    const { limit, page, subredditName } = z
       .object({
         limit: z.string(),
         page: z.string(),
@@ -70,6 +70,6 @@ export async function GET(req: Request) {
 
     return new Response(JSON.stringify(posts));
   } catch (error) {
-    return new Response("Could not fetch posts", {status: 500});
+    return new Response("Could not fetch posts", { status: 500 });
   }
 }

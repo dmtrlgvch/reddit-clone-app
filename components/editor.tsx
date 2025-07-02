@@ -1,17 +1,17 @@
 "use client";
 
-import {z} from "zod";
-import {useCallback, useEffect, useRef, useState} from "react";
-import {usePathname, useRouter} from "next/navigation";
-import axios, {AxiosError} from "axios";
+import { z } from "zod";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import axios, { AxiosError } from "axios";
 import EditorJS from "@editorjs/editorjs";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import TextareaAutosize from "react-textarea-autosize";
-import {useMutation} from "@tanstack/react-query";
-import {uploadFiles} from "@/lib/uploadthing";
-import {toast} from "@/hooks/use-toast";
-import {PostSchema, PostType} from "@/schemas/postSchema";
+import { useMutation } from "@tanstack/react-query";
+import { uploadFiles } from "@/lib/uploadthing";
+import { toast } from "@/hooks/use-toast";
+import { PostSchema, PostType } from "@/schemas/postSchema";
 
 import "@/styles/editor.css";
 
@@ -21,11 +21,11 @@ interface Props {
   subredditId: string;
 }
 
-export const Editor = ({subredditId}: Props) => {
+const Editor = ({ subredditId }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
@@ -40,10 +40,10 @@ export const Editor = ({subredditId}: Props) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const pathname = usePathname();
 
-  const {mutate: createPost} = useMutation({
-    mutationFn: async ({title, content, subredditId}: PostType) => {
-      const payload: PostType = {title, content, subredditId};
-      const {data} = await axios.post("/api/subreddit/post/create", payload);
+  const { mutate: createPost } = useMutation({
+    mutationFn: async ({ title, content, subredditId }: PostType) => {
+      const payload: PostType = { title, content, subredditId };
+      const { data } = await axios.post("/api/subreddit/post/create", payload);
       return data;
     },
     onError: (error) => {
@@ -86,7 +86,7 @@ export const Editor = ({subredditId}: Props) => {
         },
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
-        data: {blocks: []},
+        data: { blocks: [] },
         tools: {
           header: Header,
           linkTool: {
@@ -128,7 +128,7 @@ export const Editor = ({subredditId}: Props) => {
       for (const [_key, value] of Object.entries(errors)) {
         toast({
           title: "Something went wrong.",
-          description: (value as {message: string}).message,
+          description: (value as { message: string }).message,
           variant: "destructive",
         });
       }
@@ -176,15 +176,11 @@ export const Editor = ({subredditId}: Props) => {
     return null;
   }
 
-  const {ref: titleRef, ...rest} = register("title");
+  const { ref: titleRef, ...rest } = register("title");
 
   return (
     <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
-      <form
-        id="subreddit-post-form"
-        className="w-fit"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form id="subreddit-post-form" className="w-fit" onSubmit={handleSubmit(onSubmit)}>
         <div className="prose prose-stone dark:prose-invert">
           <TextareaAutosize
             ref={(e) => {
@@ -198,14 +194,13 @@ export const Editor = ({subredditId}: Props) => {
           />
           <div id="editor" className="min-h-[500px]" />
           <p className="text-sm text-gray-500">
-            Use{" "}
-            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-              Tab
-            </kbd>{" "}
-            to open the command menu.
+            Use <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">Tab</kbd> to open
+            the command menu.
           </p>
         </div>
       </form>
     </div>
   );
 };
+
+export default Editor;

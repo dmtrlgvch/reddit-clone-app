@@ -18,7 +18,7 @@ interface Props {
   initialVote?: VoteType | null;
 }
 
-export const PostVoteClient = ({ postId, initialVotesAmt, initialVote }: Props) => {
+const PostVoteClient = ({ postId, initialVotesAmt, initialVote }: Props) => {
   const { loginToast } = useCustomToasts();
   const [votesAmt, setVotesAmt] = useState<number>(initialVotesAmt);
   const [currentVote, setCurrentVote] = useState(initialVote);
@@ -98,3 +98,5 @@ export const PostVoteClient = ({ postId, initialVotesAmt, initialVote }: Props) 
     </div>
   );
 };
+
+export default PostVoteClient;

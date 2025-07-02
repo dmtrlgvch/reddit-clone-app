@@ -1,7 +1,7 @@
 import { SubscribeLeaveToggle } from "@/components/subscribe-leave-toggle";
 import { FeedButton } from "@/components/feed-button";
 import { buttonVariants } from "@/components/ui/button";
-import { getAuthSession } from "@/lib/auth";
+import { getAuthSession } from "@/lib/get-auth-session";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 import type { Metadata } from "next";

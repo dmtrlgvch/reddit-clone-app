@@ -1,4 +1,4 @@
-import { getAuthSession } from "@/lib/auth";
+import { getAuthSession } from "@/lib/get-auth-session";
 import { db } from "@/lib/db";
 import { redis } from "@/lib/redis";
 import { PostVoteSchema } from "@/schemas/voteSchema";

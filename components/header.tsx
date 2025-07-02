@@ -1,8 +1,8 @@
 import Link from "next/link";
-import {Icons} from "./icons";
-import {buttonVariants} from "@/components/ui/button";
-import {getAuthSession} from "@/lib/auth";
-import {UserMenu} from "./user-menu";
+import { Icons } from "./icons";
+import { buttonVariants } from "@/components/ui/button";
+import { getAuthSession } from "@/lib/get-auth-session";
+import { UserMenu } from "./user-menu";
 
 export const Header = async () => {
   const session = await getAuthSession();
@@ -12,9 +12,7 @@ export const Header = async () => {
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
         <Link href="/" className="flex gap-2 items-center">
           <Icons.logo className="h-10 w-10 sm:h-8 sm:w-8" />
-          <p className="hidden text-zinc-700 text-md font-medium md:block">
-            Kinda Reddit
-          </p>
+          <p className="hidden text-zinc-700 text-md font-medium md:block">Kinda Reddit</p>
         </Link>
 
         {session?.user ? (

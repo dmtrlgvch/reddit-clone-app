@@ -1,18 +1,18 @@
-import {getAuthSession} from "@/lib/auth";
-import {db} from "@/lib/db";
-import {SubredditSubscriptionSchema} from "@/schemas/subredditSchema";
-import {z} from "zod";
+import { getAuthSession } from "@/lib/get-auth-session";
+import { db } from "@/lib/db";
+import { SubredditSubscriptionSchema } from "@/schemas/subredditSchema";
+import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
     const session = await getAuthSession();
 
     if (!session?.user) {
-      return new Response("Unauthorized!", {status: 401});
+      return new Response("Unauthorized!", { status: 401 });
     }
 
     const body = await req.json();
-    const {subredditId} = SubredditSubscriptionSchema.parse(body);
+    const { subredditId } = SubredditSubscriptionSchema.parse(body);
 
     // check if user has already subscribed to subreddit
     const subscriptionExists = await db.subscription.findFirst({
@@ -40,12 +40,11 @@ export async function POST(req: Request) {
   } catch (error) {
     error;
     if (error instanceof z.ZodError) {
-      return new Response(error.message, {status: 400});
+      return new Response(error.message, { status: 400 });
     }
 
-    return new Response(
-      "Could not subscribe to subreddit at this time. Please try later",
-      {status: 500}
-    );
+    return new Response("Could not subscribe to subreddit at this time. Please try later", {
+      status: 500,
+    });
   }
 }

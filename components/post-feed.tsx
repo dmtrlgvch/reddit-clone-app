@@ -1,25 +1,25 @@
 "use client";
 
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios";
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {useIntersection} from "@mantine/hooks";
-import {PAGINATION_LIMIT} from "@/constants";
-import {Loader2} from "lucide-react";
-import {ExtendedPost} from "@/types/db";
-import {Post} from "@/components/post";
-import {useAuthSession} from "@/hooks/use-auth-session";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useIntersection } from "@mantine/hooks";
+import { PAGINATION_LIMIT } from "@/constants";
+import { Loader2 } from "lucide-react";
+import { ExtendedPost } from "@/types/db";
+import { Post } from "@/components/post";
+import { useAuthSession } from "@/hooks/use-auth-session";
 
 interface Props {
   subredditName?: string;
   initialPosts: ExtendedPost[];
 }
 
-export const PostFeed = ({initialPosts, subredditName}: Props) => {
+export const PostFeed = ({ initialPosts, subredditName }: Props) => {
   const session = useAuthSession();
 
   const lastPostRef = useRef(null);
-  const {ref, entry} = useIntersection({
+  const { ref, entry } = useIntersection({
     root: lastPostRef.current,
     threshold: 1,
   });
@@ -30,14 +30,14 @@ export const PostFeed = ({initialPosts, subredditName}: Props) => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["post-feed"],
+    queryKey: ["post-feed", subredditName],
     initialPageParam: 1,
-    queryFn: async ({pageParam}) => {
+    queryFn: async ({ pageParam }) => {
       const query =
         `/api/posts?limit=${PAGINATION_LIMIT}&page=${pageParam}` +
         (!!subredditName ? `&subredditName=${subredditName}` : "");
 
-      const {data} = await axios.get(query);
+      const { data } = await axios.get(query);
       return data as ExtendedPost[];
     },
     getNextPageParam: (lastPage, _, lastPageParam) => {
@@ -47,7 +47,7 @@ export const PostFeed = ({initialPosts, subredditName}: Props) => {
       return data.pages.flatMap((page) => page);
     },
     initialData: () => {
-      return {pages: [initialPosts], pageParams: [1]};
+      return { pages: [initialPosts], pageParams: [1] };
     },
   });
 
@@ -66,9 +66,7 @@ export const PostFeed = ({initialPosts, subredditName}: Props) => {
           return acc;
         }, 0);
 
-        const currentVote = post.votes.find(
-          (vote) => vote.userId === session?.user.id
-        );
+        const currentVote = post.votes.find((vote) => vote.userId === session?.user.id);
 
         if (index === posts.length - 1) {
           return (
