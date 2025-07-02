@@ -3,9 +3,6 @@ import { db } from "@/lib/db";
 import { PostFeed } from "@/components/post-feed";
 import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 const GeneralFeed = async () => {
   const posts = await db.post.findMany({
     orderBy: {

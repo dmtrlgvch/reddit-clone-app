@@ -5,8 +5,8 @@ import { getAuthSession } from "@/lib/get-auth-session";
 import { Home as HomeIcon } from "lucide-react";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+// export const dynamic = "force-dynamic";
+// export const fetchCache = "force-no-store";
 
 const HomePage = async () => {
   const session = await getAuthSession();

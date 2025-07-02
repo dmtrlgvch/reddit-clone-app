@@ -5,9 +5,6 @@ import { getAuthSession } from "@/lib/get-auth-session";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 const CustomFeed = async () => {
   const session = await getAuthSession();
 
