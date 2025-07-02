@@ -1,11 +1,12 @@
 "use client";
 
-import {formatTimeToNow} from "@/lib/utils";
-import {Post as PostType, User, Vote} from "@prisma/client";
-import {MessageSquare} from "lucide-react";
+import { formatTimeToNow } from "@/lib/utils";
+import { Post as PostType, User, Vote } from "@prisma/client";
+import { MessageSquare } from "lucide-react";
 import Link from "next/link";
-import {FC, useRef} from "react";
-import {EditorOutput} from "@/components/editor-output";
+import { useRef } from "react";
+import { EditorOutput } from "@/components/editor-output";
+import { PostVoteClient } from "@/components/post-vote/post-vote-client";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -32,6 +33,11 @@ export const Post = ({
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">
+        <PostVoteClient
+          postId={post.id}
+          initialVotesAmt={_votesAmt}
+          initialVote={_currentVote?.type}
+        />
         <div className="w-0 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
             {subredditName ? (
@@ -49,15 +55,10 @@ export const Post = ({
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
           <a href={`/r/${subredditName}/post/${post.id}`}>
-            <h1 className="text-lg font-semibold py-2 leading-6 text-gray-900">
-              {post.title}
-            </h1>
+            <h1 className="text-lg font-semibold py-2 leading-6 text-gray-900">{post.title}</h1>
           </a>
 
-          <div
-            className="relative text-sm max-h-40 w-full overflow-clip"
-            ref={pRef}
-          >
+          <div className="relative text-sm max-h-40 w-full overflow-clip" ref={pRef}>
             <EditorOutput content={post.content} />
             {pRef.current?.clientHeight === 160 ? (
               // blur bottom if content is too long

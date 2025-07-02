@@ -1,28 +1,28 @@
-import {SubscribeLeaveToggle} from "@/components/subscribe-leave-toggle";
-import {FeedButton} from "@/components/feed-button";
-import {buttonVariants} from "@/components/ui/button";
-import {getAuthSession} from "@/lib/auth";
-import {db} from "@/lib/db";
-import {format} from "date-fns";
-import type {Metadata} from "next";
+import { SubscribeLeaveToggle } from "@/components/subscribe-leave-toggle";
+import { FeedButton } from "@/components/feed-button";
+import { buttonVariants } from "@/components/ui/button";
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { format } from "date-fns";
+import type { Metadata } from "next";
 import Link from "next/link";
-import {notFound} from "next/navigation";
-import {ReactNode} from "react";
+import { notFound } from "next/navigation";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Breadit",
+  title: "Kinda Reddit",
 };
 
 interface Props {
   children: ReactNode;
-  params: {slug: string};
+  params: { slug: string };
 }
 
-const Layout = async ({children, params: {slug}}: Props) => {
+const Layout = async ({ children, params: { slug } }: Props) => {
   const session = await getAuthSession();
 
   const subreddit = await db.subreddit.findFirst({
-    where: {name: slug},
+    where: { name: slug },
     include: {
       posts: {
         include: {
