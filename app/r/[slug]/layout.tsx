@@ -90,7 +90,9 @@ const Layout = async ({ children, params: { slug } }: Props) => {
                   <dt className="text-gray-500">You created this community</dt>
                 </div>
               ) : null}
+            </dl>
 
+            <div className="d-flex flex-col gap-4 px-6 bg-white">
               {subreddit.creatorId !== session?.user?.id ? (
                 <SubscribeLeaveToggle
                   isSubscribed={isSubscribed}
@@ -107,7 +109,7 @@ const Layout = async ({ children, params: { slug } }: Props) => {
               >
                 Create Post
               </Link>
-            </dl>
+            </div>
           </div>
         </div>
       </div>
