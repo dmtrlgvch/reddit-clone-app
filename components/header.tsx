@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Icons } from "./icons";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthSession } from "@/lib/get-auth-session";
-import { UserMenu } from "./user-menu";
+import { UserMenu } from "@/components/user-menu";
+import SearchBar from "@/components/searchbar";
 
 export const Header = async () => {
   const session = await getAuthSession();
@@ -14,6 +15,8 @@ export const Header = async () => {
           <Icons.logo className="h-10 w-10 sm:h-8 sm:w-8" />
           <p className="hidden text-zinc-700 text-md font-medium md:block">Kinda Reddit</p>
         </Link>
+
+        <SearchBar />
 
         {session?.user ? (
           <UserMenu user={session.user} />
