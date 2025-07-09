@@ -1,27 +1,27 @@
 "use client";
 
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {toast} from "@/hooks/use-toast";
-import {useCustomToasts} from "@/hooks/use-custom-toasts";
-import {CreateSubredditPayload} from "@/lib/validators/subreddit";
-import {useMutation} from "@tanstack/react-query";
-import axios, {AxiosError} from "axios";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
+import { useCustomToasts } from "@/hooks/use-custom-toasts";
+import { CreateSubredditType } from "@/schemas/subredditSchema";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const CreateSubredditForm = () => {
   const router = useRouter();
   const [input, setInput] = useState<string>("");
-  const {loginToast} = useCustomToasts();
+  const { loginToast } = useCustomToasts();
 
-  const {mutate: createCommunity, isPending} = useMutation({
+  const { mutate: createCommunity, isPending } = useMutation({
     mutationFn: async () => {
-      const payload: CreateSubredditPayload = {
+      const payload: CreateSubredditType = {
         name: input,
       };
 
-      const {data} = await axios.post("/api/subreddit", payload);
+      const { data } = await axios.post("/api/subreddit", payload);
       return data as string;
     },
     onError: (err) => {
@@ -76,20 +76,12 @@ export const CreateSubredditForm = () => {
             <p className="absolute text-sm left-0 w-8 inset-y-0 grid place-items-center text-zinc-400">
               r/
             </p>
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="pl-6"
-            />
+            <Input value={input} onChange={(e) => setInput(e.target.value)} className="pl-6" />
           </div>
         </div>
 
         <div className="flex justify-end gap-4">
-          <Button
-            disabled={isPending}
-            variant="subtle"
-            onClick={() => router.back()}
-          >
+          <Button disabled={isPending} variant="subtle" onClick={() => router.back()}>
             Cancel
           </Button>
           <Button
